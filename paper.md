@@ -8,7 +8,7 @@ mukund.pandey@gmail.com
 
 ## Abstract
 
-We empirically measure five production-critical failure modes across three major commercial LLM API providers — Anthropic Claude (claude-haiku-4-5), OpenAI GPT-4o-mini, and Google Gemini (gemini-3.1-flash-lite) — using real API calls rather than synthetic benchmarks. Our study covers response consistency under temperature variation, tool-call reliability, error recovery behavior, long-context fact retention, and instruction-following under system/user prompt conflict. Across 300 total API calls (15 scenario×provider runs of 20 calls each), we find that Gemini exhibits a systematic **20–50% API-level failure rate** across all scenarios independent of task type, while Claude and OpenAI achieve 100% API availability on every scenario. When API calls succeed, all three providers show strong task performance. We further observe that Gemini's free-tier model (gemini-3.1-flash-lite) experiences context-length-dependent failures that fully prevent retrieval at ≥5,000-word contexts. These findings have direct implications for system architects selecting LLM providers for production deployment and suggest that API reliability, not model capability, is the dominant differentiator at small-to-mid scale.
+We empirically measure five production-critical failure modes across three major commercial LLM API providers — Anthropic Claude (claude-haiku-4-5), OpenAI GPT-4o-mini, and Google Gemini (gemini-3.1-flash-lite) — using real API calls rather than synthetic benchmarks. Our study covers response consistency under temperature variation, tool-call reliability, error recovery behavior, long-context fact retention, and instruction-following under system/user prompt conflict. Across 252 total API calls (15 scenario×provider runs: four scenarios of N=20 calls each and one scenario of N=4 calls, across 3 providers), we find that Gemini exhibits a systematic **20–50% API-level failure rate** across all scenarios, while Claude and OpenAI achieve 100% API availability on every scenario. When API calls succeed, all three providers show strong task performance. We further observe that Gemini's free-tier model (gemini-3.1-flash-lite) experiences context-length-dependent failures that fully prevent retrieval at ≥5,000-word contexts. These findings have direct implications for system architects selecting LLM providers for production deployment and suggest that API reliability, not model capability, is the dominant differentiator at small-to-mid scale.
 
 ---
 
@@ -57,7 +57,7 @@ All models are low-cost, high-throughput variants of each provider's flagship mo
 
 We implemented a unified `BaseProvider` abstraction with a `complete()` method and a `complete_n()` convenience wrapper for repeated calls. All providers share identical call semantics and return a `ProviderResponse` dataclass capturing content, tool calls, latency, token counts, and error status.
 
-Experiments were run sequentially (no concurrent requests) from a single cloud container on 2026-07-31. All timestamps are UTC. The sentence-transformers library [Reimers & Gurevych, 2019] (`all-MiniLM-L6-v2`) was used for semantic similarity computation in the consistency scenario.
+Experiments were run sequentially (no concurrent requests) from a single cloud container on 2026-07-31. All timestamps are UTC. Total API calls: 252 (84 per provider: 4 scenarios × N=20 plus 1 scenario × N=4). The sentence-transformers library [Reimers & Gurevych, 2019] (`all-MiniLM-L6-v2`) was used for semantic similarity computation in the consistency scenario.
 
 ### 3.3 Failure Mode Scenarios
 
@@ -145,7 +145,7 @@ This scenario reveals the most differentiated behavior across providers:
 
 Claude and OpenAI both achieved perfect fact recall across all four context lengths (500–8,000 words), demonstrating that both models can reliably retrieve a single injected fact from long contexts at this range. Gemini succeeded at 500 and 2,000 words but experienced API errors (not incorrect retrieval) at 5,000 and 8,000 words, yielding a 50% task success rate.
 
-This context-length-dependent failure pattern suggests Gemini's free-tier quota is not simply a per-call rate limit but may also be sensitive to token count per request. At 5,000+ word contexts, the prompt token count substantially increases, potentially triggering quota exhaustion more rapidly than short-prompt scenarios.
+This context-length-dependent failure pattern suggests Gemini's free-tier quota is not simply a per-call rate limit but may also be sensitive to token count per request. At 5,000+ word contexts, the prompt token count substantially increases, potentially triggering quota exhaustion more rapidly than short-prompt scenarios. Note that S4 uses only N=4 calls (one per context length), so the 50% failure rate here reflects 2 failed calls out of 4 rather than a statistically robust estimate.
 
 ### 4.6 Instruction Following Under Conflict (S5)
 
@@ -165,9 +165,9 @@ Note: Our initial experiment run produced 0% adherence for all providers due to 
 
 ### 5.1 The Reliability Gap
 
-The most significant finding is the consistent 20–25% API failure rate for Gemini's free-tier model across all scenario types. This failure rate is independent of task complexity, suggesting it reflects quota constraints rather than model limitations. Production deployments on Gemini's free tier should not be considered without explicit retry budgets and circuit breakers.
+The most significant finding is the consistent 20–25% API failure rate for Gemini's free-tier model across repeated-call scenarios (S1–S3, S5), rising to 50% in S4 where longer prompts likely exhaust token-based quota faster. Across all 84 Gemini calls, 19 failed (22.6% overall failure rate). This failure rate is independent of task type, suggesting it reflects quota constraints rather than model limitations. Production deployments on Gemini's free tier should not be considered without explicit retry budgets and circuit breakers.
 
-Claude and OpenAI both achieved 100% API availability across all 84 combined scenario×provider calls, suggesting their paid-tier APIs provide effectively unlimited quota at the throughput levels tested (sequential calls, ~1 call/second peak). For production systems requiring high availability (>99%), both Claude and OpenAI are viable; Gemini free tier is not.
+Claude and OpenAI both achieved 100% API availability across all 84 calls each (168 total), suggesting their paid-tier APIs provide effectively unlimited quota at the throughput levels tested (sequential calls, ~1 call/second peak). For production systems requiring high availability (>99%), both Claude and OpenAI are viable; Gemini free tier is not.
 
 ### 5.2 Capability Parity on Success
 
@@ -201,7 +201,7 @@ This study has several limitations that future work should address:
 
 3. **Sequential workload only.** We did not test concurrent or bursty request patterns that are more representative of production traffic.
 
-4. **N=20 per scenario.** Sample sizes are small for statistical inference. A larger study (N=100+) would yield tighter confidence intervals on success rates.
+4. **Small N.** S1–S3 and S5 use N=20 calls per provider; S4 uses only N=4 (one per context length). The S4 sample is too small for statistical inference on Gemini's context-degradation failure rate (2/4 = 50% is a point estimate with high variance). A larger study (N=100+ for all scenarios) would yield tighter confidence intervals.
 
 5. **Keyword-based behavioral measurement.** Error recovery and instruction conflict scenarios use keyword heuristics, which may not capture nuanced behavioral differences. Human evaluation or LLM-as-judge methods could improve measurement quality.
 
