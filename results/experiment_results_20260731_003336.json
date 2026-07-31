@@ -1,0 +1,206 @@
+[
+  {
+    "scenario_id": "consistency",
+    "provider": "claude",
+    "model": "claude-haiku-4-5",
+    "runs": 20,
+    "success_rate": 1.0,
+    "consistency_score": 0.9680934197024296,
+    "mean_latency_ms": 1864.7867694000183,
+    "error_count": 0,
+    "notes": {}
+  },
+  {
+    "scenario_id": "consistency",
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "runs": 20,
+    "success_rate": 1.0,
+    "consistency_score": 0.9198190996521398,
+    "mean_latency_ms": 1404.9125847999903,
+    "error_count": 0,
+    "notes": {}
+  },
+  {
+    "scenario_id": "consistency",
+    "provider": "gemini",
+    "model": "gemini-3.1-flash-lite",
+    "runs": 20,
+    "success_rate": 0.8,
+    "consistency_score": 0.9325910463929177,
+    "mean_latency_ms": 882.76376218748,
+    "error_count": 4,
+    "notes": {}
+  },
+  {
+    "scenario_id": "tool_reliability",
+    "provider": "claude",
+    "model": "claude-haiku-4-5",
+    "runs": 20,
+    "success_rate": 1.0,
+    "consistency_score": 1.0,
+    "mean_latency_ms": 929.5112004500197,
+    "error_count": 0,
+    "notes": {
+      "correct_tool_rate": 1.0,
+      "required_arg_rate": 1.0,
+      "hallucinated_arg_rate": 0.0
+    }
+  },
+  {
+    "scenario_id": "tool_reliability",
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "runs": 20,
+    "success_rate": 1.0,
+    "consistency_score": 1.0,
+    "mean_latency_ms": 797.7266011999859,
+    "error_count": 0,
+    "notes": {
+      "correct_tool_rate": 1.0,
+      "required_arg_rate": 1.0,
+      "hallucinated_arg_rate": 0.0
+    }
+  },
+  {
+    "scenario_id": "tool_reliability",
+    "provider": "gemini",
+    "model": "gemini-3.1-flash-lite",
+    "runs": 20,
+    "success_rate": 0.8,
+    "consistency_score": 1.0,
+    "mean_latency_ms": 522.3850615625025,
+    "error_count": 4,
+    "notes": {
+      "correct_tool_rate": 1.0,
+      "required_arg_rate": 1.0,
+      "hallucinated_arg_rate": 0.0
+    }
+  },
+  {
+    "scenario_id": "error_recovery",
+    "provider": "claude",
+    "model": "claude-haiku-4-5",
+    "runs": 20,
+    "success_rate": 1.0,
+    "consistency_score": 1.0,
+    "mean_latency_ms": 2699.3696082499923,
+    "error_count": 0,
+    "notes": {
+      "recovery_rate": 1.0
+    }
+  },
+  {
+    "scenario_id": "error_recovery",
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "runs": 20,
+    "success_rate": 1.0,
+    "consistency_score": 1.0,
+    "mean_latency_ms": 1568.932500899973,
+    "error_count": 0,
+    "notes": {
+      "recovery_rate": 1.0
+    }
+  },
+  {
+    "scenario_id": "error_recovery",
+    "provider": "gemini",
+    "model": "gemini-3.1-flash-lite",
+    "runs": 20,
+    "success_rate": 0.8,
+    "consistency_score": 1.0,
+    "mean_latency_ms": 1204.5584804375267,
+    "error_count": 4,
+    "notes": {
+      "recovery_rate": 1.0
+    }
+  },
+  {
+    "scenario_id": "context_degradation",
+    "provider": "claude",
+    "model": "claude-haiku-4-5",
+    "runs": 4,
+    "success_rate": 1.0,
+    "consistency_score": 1.0,
+    "mean_latency_ms": 708.1982747499751,
+    "error_count": 0,
+    "notes": {
+      "ctx_500": "correct",
+      "ctx_2000": "correct",
+      "ctx_5000": "correct",
+      "ctx_8000": "correct"
+    }
+  },
+  {
+    "scenario_id": "context_degradation",
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "runs": 4,
+    "success_rate": 1.0,
+    "consistency_score": 1.0,
+    "mean_latency_ms": 856.6475812500585,
+    "error_count": 0,
+    "notes": {
+      "ctx_500": "correct",
+      "ctx_2000": "correct",
+      "ctx_5000": "correct",
+      "ctx_8000": "correct"
+    }
+  },
+  {
+    "scenario_id": "context_degradation",
+    "provider": "gemini",
+    "model": "gemini-3.1-flash-lite",
+    "runs": 4,
+    "success_rate": 0.5,
+    "consistency_score": 0.5,
+    "mean_latency_ms": 746.2337560000378,
+    "error_count": 2,
+    "notes": {
+      "ctx_500": "correct",
+      "ctx_2000": "correct",
+      "ctx_5000": "error",
+      "ctx_8000": "error"
+    }
+  },
+  {
+    "scenario_id": "instruction_conflict",
+    "provider": "claude",
+    "model": "claude-haiku-4-5",
+    "runs": 20,
+    "success_rate": 1.0,
+    "consistency_score": 1.0,
+    "mean_latency_ms": 1457.6966160000325,
+    "error_count": 0,
+    "notes": {
+      "system_prompt_adherence": 1.0
+    }
+  },
+  {
+    "scenario_id": "instruction_conflict",
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "runs": 20,
+    "success_rate": 1.0,
+    "consistency_score": 1.0,
+    "mean_latency_ms": 812.6381486000014,
+    "error_count": 0,
+    "notes": {
+      "system_prompt_adherence": 1.0
+    }
+  },
+  {
+    "scenario_id": "instruction_conflict",
+    "provider": "gemini",
+    "model": "gemini-3.1-flash-lite",
+    "runs": 20,
+    "success_rate": 0.75,
+    "consistency_score": 1.0,
+    "mean_latency_ms": 594.5683541333286,
+    "error_count": 5,
+    "notes": {
+      "system_prompt_adherence": 1.0
+    }
+  }
+]
