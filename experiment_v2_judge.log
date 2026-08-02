@@ -1,0 +1,66 @@
+  ✓  claude (claude-haiku-4-5) ready
+  ✓  openai (gpt-4o-mini) ready
+  ✓  gemini (gemini-3.1-flash-lite) ready
+
+============================================================
+Providers : claude, openai, gemini
+Scenarios : ['error_recovery', 'instruction_conflict']
+============================================================
+
+  Note: Gemini rate-limiting adds ~12 min for ~180 calls.
+
+Starting experiment...
+
+============================================================
+Scenario: Error Recovery  [error_recovery]
+============================================================
+
+  [1/6] claude / claude-haiku-4-5
+    Done in 299.8s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 1.000
+    mean_latency  : 3331 ms
+
+  [2/6] openai / gpt-4o-mini
+    Done in 186.2s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 1.000
+    mean_latency  : 2068 ms
+
+  [3/6] gemini / gemini-3.1-flash-lite
+    Done in 361.1s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 1.000
+    mean_latency  : 1329 ms
+
+============================================================
+Scenario: Instruction Following Under Conflict  [instruction_conflict]
+============================================================
+
+  [4/6] claude / claude-haiku-4-5
+    Done in 210.4s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 0.667
+    mean_latency  : 2337 ms
+
+  [5/6] openai / gpt-4o-mini
+    Done in 119.6s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 0.756
+    mean_latency  : 1328 ms
+
+  [6/6] gemini / gemini-3.1-flash-lite
+    Done in 357.2s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 0.678
+    mean_latency  : 890 ms
+
+Results saved → results_v2_judge/experiment_v2_results_20260802_090939.json
+
+============================================================
+EXPERIMENT V2 COMPLETE
+  Scenario×provider runs : 6
+  Total API calls        : 540
+  Total errors           : 0 (0.0%)
+  Results saved in       : results_v2_judge/
+============================================================

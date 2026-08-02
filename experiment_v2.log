@@ -1,0 +1,191 @@
+  ✓  claude (claude-haiku-4-5) ready
+  ✓  openai (gpt-4o-mini) ready
+  ✓  gemini (gemini-3.1-flash-lite) ready
+
+============================================================
+Providers : claude, openai, gemini
+Scenarios : all
+============================================================
+
+  Note: Gemini rate-limiting adds ~30 min for ~450 calls.
+
+Starting experiment...
+
+============================================================
+Scenario: Response Consistency  [consistency]
+============================================================
+
+  [1/15] claude / claude-haiku-4-5
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 12749.40it/s]
+    Done in 168.4s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 0.922
+    mean_latency  : 1768 ms
+    prompt_0_consistency    : 0.938
+    prompt_1_consistency    : 0.942
+    prompt_2_consistency    : 0.885
+
+  [2/15] openai / gpt-4o-mini
+    Done in 133.2s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 0.913
+    mean_latency  : 1462 ms
+    prompt_0_consistency    : 0.899
+    prompt_1_consistency    : 0.935
+    prompt_2_consistency    : 0.905
+
+  [3/15] gemini / gemini-3.1-flash-lite
+    Done in 431.8s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 0.898
+    mean_latency  : 1713 ms
+    prompt_0_consistency    : 0.876
+    prompt_1_consistency    : 0.934
+    prompt_2_consistency    : 0.885
+
+============================================================
+Scenario: Tool Call Reliability  [tool_reliability]
+============================================================
+
+  [4/15] claude / claude-haiku-4-5
+    Done in 92.9s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 1.000
+    mean_latency  : 1032 ms
+
+  [5/15] openai / gpt-4o-mini
+    Done in 65.9s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 1.000
+    mean_latency  : 732 ms
+
+  [6/15] gemini / gemini-3.1-flash-lite
+    Done in 375.5s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 1.000
+    mean_latency  : 753 ms
+
+============================================================
+Scenario: Error Recovery  [error_recovery]
+============================================================
+
+  [7/15] claude / claude-haiku-4-5
+    Done in 289.0s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 1.000
+    mean_latency  : 3211 ms
+
+  [8/15] openai / gpt-4o-mini
+    Done in 257.6s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 1.000
+    mean_latency  : 2862 ms
+
+  [9/15] gemini / gemini-3.1-flash-lite
+    Done in 357.5s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 1.000
+    mean_latency  : 1369 ms
+
+============================================================
+Scenario: Long Context Degradation  [context_degradation]
+============================================================
+
+  [10/15] claude / claude-haiku-4-5
+    Done in 13.7s
+    success_rate  : 100.00%  (16/16 calls)
+    quality_score : 1.000
+    mean_latency  : 858 ms
+    fact0_ctx1000           : correct
+    fact0_ctx12000          : correct
+    fact0_ctx16000          : correct
+    fact0_ctx2000           : correct
+    fact0_ctx4000           : correct
+    fact0_ctx500            : correct
+    fact0_ctx6000           : correct
+    fact0_ctx8000           : correct
+    fact1_ctx1000           : correct
+    fact1_ctx12000          : correct
+    fact1_ctx16000          : correct
+    fact1_ctx2000           : correct
+    fact1_ctx4000           : correct
+    fact1_ctx500            : correct
+    fact1_ctx6000           : correct
+    fact1_ctx8000           : correct
+
+  [11/15] openai / gpt-4o-mini
+    Done in 15.0s
+    success_rate  : 100.00%  (16/16 calls)
+    quality_score : 1.000
+    mean_latency  : 935 ms
+    fact0_ctx1000           : correct
+    fact0_ctx12000          : correct
+    fact0_ctx16000          : correct
+    fact0_ctx2000           : correct
+    fact0_ctx4000           : correct
+    fact0_ctx500            : correct
+    fact0_ctx6000           : correct
+    fact0_ctx8000           : correct
+    fact1_ctx1000           : correct
+    fact1_ctx12000          : correct
+    fact1_ctx16000          : correct
+    fact1_ctx2000           : correct
+    fact1_ctx4000           : correct
+    fact1_ctx500            : correct
+    fact1_ctx6000           : correct
+    fact1_ctx8000           : correct
+
+  [12/15] gemini / gemini-3.1-flash-lite
+    Done in 60.7s
+    success_rate  : 100.00%  (16/16 calls)
+    quality_score : 1.000
+    mean_latency  : 733 ms
+    fact0_ctx1000           : correct
+    fact0_ctx12000          : correct
+    fact0_ctx16000          : correct
+    fact0_ctx2000           : correct
+    fact0_ctx4000           : correct
+    fact0_ctx500            : correct
+    fact0_ctx6000           : correct
+    fact0_ctx8000           : correct
+    fact1_ctx1000           : correct
+    fact1_ctx12000          : correct
+    fact1_ctx16000          : correct
+    fact1_ctx2000           : correct
+    fact1_ctx4000           : correct
+    fact1_ctx500            : correct
+    fact1_ctx6000           : correct
+    fact1_ctx8000           : correct
+
+============================================================
+Scenario: Instruction Following Under Conflict  [instruction_conflict]
+============================================================
+
+  [13/15] claude / claude-haiku-4-5
+    Done in 221.4s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 0.667
+    mean_latency  : 2460 ms
+
+  [14/15] openai / gpt-4o-mini
+    Done in 133.7s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 0.778
+    mean_latency  : 1486 ms
+
+  [15/15] gemini / gemini-3.1-flash-lite
+    Done in 392.2s
+    success_rate  : 100.00%  (90/90 calls)
+    quality_score : 0.667
+    mean_latency  : 1379 ms
+
+Results saved → results_v2/experiment_v2_results_20260731_023039.json
+
+============================================================
+EXPERIMENT V2 COMPLETE
+  Scenario×provider runs : 15
+  Total API calls        : 1128
+  Total errors           : 0 (0.0%)
+  Results saved in       : results_v2/
+============================================================

@@ -2,11 +2,16 @@
 GeminiProvider
 ==============
 Wraps the Google GenAI SDK (new) for use in cross-provider experiments.
-Model: gemini-1.5-flash  (free tier, fast)
+Model: gemini-3.1-flash-lite  (free tier, confirmed working)
+
+Rate limiting: built-in 4-second minimum gap between requests to stay
+safely under the 15 RPM free-tier limit. This makes experiments slower
+but eliminates quota-induced failures, which would confound results.
 """
 from __future__ import annotations
 
 import os
+import time
 
 from google import genai
 from google.genai import types
@@ -18,10 +23,21 @@ class GeminiProvider(BaseProvider):
     name = "gemini"
     model = "gemini-3.1-flash-lite"
 
+    # Minimum seconds between API calls (free tier = 15 RPM → 4s safe gap)
+    _MIN_CALL_INTERVAL = 4.0
+    _last_call_time: float = 0.0
+
     def __init__(self, api_key: str | None = None, model: str | None = None):
         self._client = genai.Client(api_key=api_key or os.environ["GEMINI_API_KEY"])
         if model:
             self.model = model
+
+    def _rate_limit(self) -> None:
+        """Block until at least _MIN_CALL_INTERVAL seconds since last call."""
+        elapsed = time.time() - GeminiProvider._last_call_time
+        if elapsed < self._MIN_CALL_INTERVAL:
+            time.sleep(self._MIN_CALL_INTERVAL - elapsed)
+        GeminiProvider._last_call_time = time.time()
 
     def complete(
         self,
@@ -63,6 +79,8 @@ class GeminiProvider(BaseProvider):
                     )
                 )
             gemini_tools = [types.Tool(function_declarations=fn_decls)]
+
+        self._rate_limit()
 
         try:
             def _call():
